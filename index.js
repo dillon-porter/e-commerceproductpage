@@ -70,14 +70,6 @@ function toggleCart() {
     cart.classList.toggle("invisible");
 }
 
-function closeLightBox() {
-    lightbox.classList.add("invisible");
-}
-
-function openLightBox() {
-    lightbox.classList.remove("invisible");
-}
-
 function addItem() {
     if (amountValue > 0) {
         const total = 125.00 * amountValue;
@@ -156,7 +148,25 @@ function closeCartOnClickOutside(event) {
 // Set up the event listener on the document
 document.addEventListener("click", closeCartOnClickOutside);
 
-mainThumbnail.addEventListener("click", function(event) {
+mainThumbnail.addEventListener("click", function() {
     openLightBox();
-    event.stopPropagation(); // Prevent the event from bubbling up to the document
 });
+
+
+function closeLightboxOnClickOutside(event) {
+    // Check if the click is outside of the lightbox element and the lightbox is visible
+    if (!lightbox.contains(event.target) && !lightbox.classList.contains('invisible')) {
+        closeLightBox();
+    }
+}
+
+function closeLightBox() {
+    lightbox.classList.add("invisible");
+    overlay.classList.remove("active");
+}
+
+
+function openLightBox() {
+    lightbox.classList.remove("invisible");
+    overlay.classList.add("active");
+}
